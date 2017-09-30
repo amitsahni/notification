@@ -28,12 +28,8 @@ public abstract class NotifyBuilder {
         notification = model.builder.build();
     }
 
-    public void setBigContentView(RemoteViews views) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            notification.bigContentView = views;
-            return;
-        }
-        Log.w(TAG, "Version does not support big content view");
+    void setBigContentView(RemoteViews views) {
+        model.builder.setCustomBigContentView(views);
     }
 
     protected Notification notificationNotify() {

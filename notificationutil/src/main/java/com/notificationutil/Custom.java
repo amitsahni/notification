@@ -7,6 +7,7 @@ import android.widget.RemoteViews;
  */
 
 public class Custom extends NotifyBuilder {
+
     public Custom(NotificationModel model, int identifier, String tag) {
         super(model, identifier, tag);
         createRemoteViews();
@@ -18,15 +19,20 @@ public class Custom extends NotifyBuilder {
         super.notificationNotify();
     }
 
+    public Custom addRemoteView(RemoteViews remoteViews) {
+        setBigContentView(remoteViews);
+        return this;
+    }
 
-    private RemoteViews createRemoteViews() {
+
+    private void createRemoteViews() {
         RemoteViews remoteViews = new RemoteViews(model.context.getPackageName(), R.layout.notification_custom_content);
         remoteViews.setImageViewResource(R.id.image_icon, model.smallIcon);
         remoteViews.setTextViewText(R.id.text_title, model.title);
         remoteViews.setTextViewText(R.id.text_message, model.message);
         remoteViews.setImageViewResource(R.id.image_end, model.largeIcon);
 //        model.builder.setCustomHeadsUpContentView(remoteViews);
-        model.builder.setCustomBigContentView(remoteViews);
-        return remoteViews;
+        setBigContentView(remoteViews);
+//        model.builder.setCustomContentView(remoteViews);
     }
 }

@@ -71,12 +71,6 @@ public class Builder {
         if (color <= 0) {
             throw new IllegalArgumentException("Resource ID Should Not Be Less Than Or Equal To Zero!");
         }
-        int notificationColor = -1;
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            notificationColor = color;
-        } else {
-//            notificationColor = ContextCompat.getColor(model.context, color);
-        }
         model.builder.setColor(ContextCompat.getColor(model.context, color));
         return this;
     }
@@ -124,6 +118,64 @@ public class Builder {
             bigStyle.setSummaryText(summaryText);
         }
         model.builder.setStyle(bigStyle);
+        return this;
+    }
+
+    public Builder bigPictureStyle(@NonNull String bigTextStyle) {
+        if (bigTextStyle.trim().length() == 0) {
+            throw new IllegalArgumentException("Big Text Style Must Not Be Empty!");
+        }
+        return bigPictureStyle(bigTextStyle, null);
+    }
+
+    public Builder bigPictureStyle(@NonNull String bigTextStyle, String summaryText) {
+        if (bigTextStyle.trim().length() == 0) {
+            throw new IllegalArgumentException("Big Text Style Must Not Be Empty!");
+        }
+        NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
+        bigPictureStyle.setBigContentTitle(bigTextStyle);
+        if (summaryText != null) {
+            bigPictureStyle.setSummaryText(summaryText);
+        }
+        if (model.largeIcon > 0) {
+            Bitmap bitmap = BitmapFactory.decodeResource(model.context.getResources(), model.largeIcon);
+            bigPictureStyle.bigPicture(bitmap);
+        }
+        model.builder.setStyle(bigPictureStyle);
+        return this;
+    }
+
+    public Builder bigPictureStyle(@NonNull String bigTextStyle, String summaryText, @NonNull Bitmap bitmap) {
+        if (bigTextStyle.trim().length() == 0) {
+            throw new IllegalArgumentException("Big Text Style Must Not Be Empty!");
+        }
+        if (bitmap == null) {
+            throw new IllegalArgumentException("Bitmap Must Not be Null!");
+        }
+        NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
+        bigPictureStyle.setBigContentTitle(bigTextStyle);
+        if (summaryText != null) {
+            bigPictureStyle.setSummaryText(summaryText);
+        }
+        bigPictureStyle.bigPicture(bitmap);
+        model.builder.setStyle(bigPictureStyle);
+        return this;
+    }
+
+    public Builder bigPictureStyle(@NonNull String bigTextStyle, String summaryText, @DrawableRes int largeIcon) {
+        if (bigTextStyle.trim().length() == 0) {
+            throw new IllegalArgumentException("Big Text Style Must Not Be Empty!");
+        }
+        NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
+        bigPictureStyle.setBigContentTitle(bigTextStyle);
+        if (summaryText != null) {
+            bigPictureStyle.setSummaryText(summaryText);
+        }
+        if (largeIcon > 0) {
+            Bitmap bitmap = BitmapFactory.decodeResource(model.context.getResources(), largeIcon);
+            bigPictureStyle.bigPicture(bitmap);
+        }
+        model.builder.setStyle(bigPictureStyle);
         return this;
     }
 
@@ -369,12 +421,4 @@ public class Builder {
         }
     }
 
-    private RemoteViews createRemoteViews(int icon) {
-        RemoteViews remoteViews = new RemoteViews(model.context.getPackageName(), R.layout.notification_custom_content);
-        remoteViews.setImageViewResource(R.id.image_icon, model.smallIcon);
-        remoteViews.setTextViewText(R.id.text_title, "Title");
-        remoteViews.setTextViewText(R.id.text_message, "message");
-        remoteViews.setImageViewResource(R.id.image_end, model.smallIcon);
-        return remoteViews;
-    }
 }
