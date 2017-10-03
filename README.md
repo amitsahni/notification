@@ -79,7 +79,7 @@ Download
 --------
 Add the JitPack repository to your root build.gradle:
 
-![](https://jitpack.io/v/amitclickapps/retrofit-util.svg?style=flat-square)
+![](https://jitpack.io/v/amitclickapps/notification-util.svg?style=flat-square)
 
 
 ```groovy
