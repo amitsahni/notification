@@ -14,6 +14,7 @@ public class NotificationModel {
     PendingIntent pendingIntent;
     int notificationId;
     String tag;
+    String channelId;
     String title;
     String message;
     int smallIcon;

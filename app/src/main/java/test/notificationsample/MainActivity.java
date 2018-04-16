@@ -1,15 +1,10 @@
 package test.notificationsample;
 
 import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -31,17 +26,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button1:
-                NotificationUtil.with(this)
-                        .button(android.R.drawable.sym_action_call, "Call", PendingIntent.getBroadcast(this, 0, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT))
-                        .button(android.R.drawable.sym_action_chat, "Chat", PendingIntent.getBroadcast(this, 0, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT))
-                        .button(android.R.drawable.sym_action_email, "Email", PendingIntent.getBroadcast(this, 0, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT))
+                NotificationUtil.with(this, R.mipmap.ic_launcher)
+//                        .button(android.R.drawable.sym_action_call, "Call", PendingIntent.getBroadcast(this, 0, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT))
+//                        .button(android.R.drawable.sym_action_chat, "Chat", PendingIntent.getBroadcast(this, 0, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT))
+//                        .button(android.R.drawable.sym_action_email, "Email", PendingIntent.getBroadcast(this, 0, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT))
                         .autoCancel(true)
                         .identifier(10)
-                        .smallIcon(android.R.drawable.sym_action_email)
-                        .title("title")
-                        .bigTextStyle("message message  message message message message message message message ", "title")
-                        .message("title")
-                        .largeIcon(android.R.drawable.sym_action_chat)
+                        //.title("title")
+                        .bigTextStyle("message message  message message message message message message message ", "title title title title")
+                        .message("message")
+                        .largeIcon(R.mipmap.ic_launcher)
                         .click(MainActivity.class)
                         .color(android.R.color.holo_green_dark)
                         .flags(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS)
@@ -54,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .title("title").message("message").ticker("ticker")
                         .smallIcon(android.R.drawable.sym_action_email)
                         .largeIcon(R.drawable.a1)
-                        .bigPictureStyle("title title", "message message")
+                        .bigPictureStyle("title title", "message message", R.drawable.a1)
                         .color(android.R.color.holo_green_dark)
                         .flags(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS)
                         .priority(NotificationCompat.PRIORITY_HIGH)
@@ -63,16 +57,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.button3:
                 Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.a1);
-                NotificationUtil.with(this)
+                NotificationUtil.with(this, R.mipmap.ic_launcher)
                         .autoCancel(true)
                         .identifier(11)
-                        .smallIcon(R.mipmap.ic_launcher)
-                        .title("title title")
-                        .largeIcon(R.drawable.a1)
-                        .message("messagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessage")
-                        .bigPictureStyle("title title", "message message")
+                        //.smallIcon(R.mipmap.ic_launcher)
+                        .title("title")
+                        .largeIcon(R.mipmap.ic_launcher)
+                        .message("message")
+                        //.bigPictureStyle("title title", "message message", R.drawable.a1)
                         .color(android.R.color.holo_red_dark)
-                        .flags(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS)
+                        .flags(Notification.DEFAULT_ALL)
                         .priority(NotificationCompat.PRIORITY_HIGH)
                         .simple()
                         .build();

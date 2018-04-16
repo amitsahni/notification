@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
@@ -14,7 +13,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
-import android.widget.RemoteViews;
 
 
 /**
@@ -26,10 +24,19 @@ public class Builder {
 
     public Builder(@NonNull Context context) {
         model = new NotificationModel();
-        model.builder = new NotificationCompat.Builder(context);
+        model.builder = new NotificationCompat.Builder(context, "");
         model.context = context;
         model.pendingIntent = PendingIntent.getBroadcast(context, 0, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT);
         model.builder.setContentIntent(model.pendingIntent);
+    }
+
+    public Builder(@NonNull Context context, @DrawableRes int smallIcon) {
+        model = new NotificationModel();
+        model.builder = new NotificationCompat.Builder(context, "");
+        model.context = context;
+        model.pendingIntent = PendingIntent.getBroadcast(context, 0, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT);
+        model.builder.setContentIntent(model.pendingIntent);
+        smallIcon(smallIcon);
     }
 
     public Builder identifier(int identifier) {
@@ -45,23 +52,19 @@ public class Builder {
         return this;
     }
 
-    public Builder title(String title) {
-        if (title == null) {
-            throw new IllegalStateException("Title Must Not Be Null!");
-        }
+    public Builder channelId(@NonNull String channelId) {
+        model.channelId = channelId;
+        model.builder.setChannelId(channelId);
+        return this;
+    }
 
-        if (title.trim().length() == 0) {
-            throw new IllegalArgumentException("Title Must Not Be Empty!");
-        }
+    public Builder title(@NonNull String title) {
         model.title = title;
         model.builder.setContentTitle(title);
         return this;
     }
 
     public Builder message(@NonNull String message) {
-        if (message.trim().length() == 0) {
-            throw new IllegalArgumentException("Message Must Not Be Empty!");
-        }
         model.message = message;
         model.builder.setContentText(message);
         return this;
@@ -76,10 +79,6 @@ public class Builder {
     }
 
     public Builder ticker(@NonNull String ticker) {
-        if (ticker == null) {
-            throw new IllegalStateException("Ticker Must Not Be Null!");
-        }
-
         if (ticker.trim().length() == 0) {
             throw new IllegalArgumentException("Ticker Must Not Be Empty!");
         }
@@ -129,55 +128,34 @@ public class Builder {
     }
 
     public Builder bigPictureStyle(@NonNull String bigTextStyle, String summaryText) {
-        if (bigTextStyle.trim().length() == 0) {
-            throw new IllegalArgumentException("Big Text Style Must Not Be Empty!");
-        }
-        NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
-        bigPictureStyle.setBigContentTitle(bigTextStyle);
-        if (summaryText != null) {
-            bigPictureStyle.setSummaryText(summaryText);
-        }
-        if (model.largeIcon > 0) {
-            Bitmap bitmap = BitmapFactory.decodeResource(model.context.getResources(), model.largeIcon);
-            bigPictureStyle.bigPicture(bitmap);
-        }
-        model.builder.setStyle(bigPictureStyle);
-        return this;
-    }
-
-    public Builder bigPictureStyle(@NonNull String bigTextStyle, String summaryText, @NonNull Bitmap bitmap) {
-        if (bigTextStyle.trim().length() == 0) {
-            throw new IllegalArgumentException("Big Text Style Must Not Be Empty!");
-        }
-        if (bitmap == null) {
-            throw new IllegalArgumentException("Bitmap Must Not be Null!");
-        }
-        NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
-        bigPictureStyle.setBigContentTitle(bigTextStyle);
-        if (summaryText != null) {
-            bigPictureStyle.setSummaryText(summaryText);
-        }
-        bigPictureStyle.bigPicture(bitmap);
-        model.builder.setStyle(bigPictureStyle);
-        return this;
+        return bigPictureStyle(bigTextStyle, summaryText, 0);
     }
 
     public Builder bigPictureStyle(@NonNull String bigTextStyle, String summaryText, @DrawableRes int largeIcon) {
+        Bitmap bitmap = null;
+        if (largeIcon > 0) {
+            bitmap = BitmapFactory.decodeResource(model.context.getResources(), largeIcon);
+        }
+        return bigPictureStyle(bigTextStyle, summaryText, bitmap);
+    }
+
+    public Builder bigPictureStyle(@NonNull String bigTextStyle, String summaryText, @Nullable Bitmap bitmap) {
         if (bigTextStyle.trim().length() == 0) {
             throw new IllegalArgumentException("Big Text Style Must Not Be Empty!");
         }
+
         NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
         bigPictureStyle.setBigContentTitle(bigTextStyle);
         if (summaryText != null) {
             bigPictureStyle.setSummaryText(summaryText);
         }
-        if (largeIcon > 0) {
-            Bitmap bitmap = BitmapFactory.decodeResource(model.context.getResources(), largeIcon);
+        if (bitmap != null) {
             bigPictureStyle.bigPicture(bitmap);
         }
         model.builder.setStyle(bigPictureStyle);
         return this;
     }
+
 
     public Builder inboxStyle(@NonNull String[] inboxLines, @NonNull String title, String summary) {
         if (inboxLines.length <= 0) {

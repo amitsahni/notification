@@ -1,6 +1,7 @@
 package com.notificationutil;
 
 import android.content.Context;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 
 /**
@@ -51,8 +52,19 @@ public class NotificationUtil {
      * @param context the context
      * @return the builder
      */
+    @Deprecated
     public static Builder with(@NonNull Context context) {
         return new Builder(context);
+    }
+
+    /**
+     * With builder.
+     *
+     * @param context the context
+     * @return the builder
+     */
+    public static Builder with(@NonNull Context context, @DrawableRes int smallIcon) {
+        return new Builder(context, smallIcon);
     }
 
 }
