@@ -209,9 +209,6 @@ public class Builder {
     }
 
     public Builder group(@NonNull String groupKey) {
-        if (groupKey == null) {
-            throw new IllegalStateException("Ticker Must Not Be Null!");
-        }
         if (groupKey.trim().length() == 0) {
             throw new IllegalArgumentException("Group Key Must Not Be Empty!");
         }

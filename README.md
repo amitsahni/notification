@@ -3,7 +3,7 @@
 
 ### Notification
 ```
-       NotificationUtil.with(this)
+       NotificationUtil.with(this, R.mipmap.ic_launcher)
                                .button(android.R.drawable.sym_action_call, "Call", PendingIntent.getBroadcast(this, 0, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT))
                                .button(android.R.drawable.sym_action_chat, "Chat", PendingIntent.getBroadcast(this, 0, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT))
                                .button(android.R.drawable.sym_action_email, "Email", PendingIntent.getBroadcast(this, 0, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT))
@@ -23,7 +23,7 @@
 ```
 
 ```
-        NotificationUtil.with(this)
+        NotificationUtil.with(this, R.mipmap.ic_launcher)
                                 .title("title").message("message").ticker("ticker")
                                 .smallIcon(android.R.drawable.sym_action_email)
                                 .largeIcon(R.drawable.a1)
@@ -36,7 +36,7 @@
 ```
 ```
     Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.a1);
-                NotificationUtil.with(this)
+               NotificationUtil.with(this, R.mipmap.ic_launcher)
                         .autoCancel(true)
                         .identifier(11)
                         .smallIcon(R.mipmap.ic_launcher)
@@ -51,7 +51,7 @@
                         .build();
 ```
 ```
-NotificationUtil.with(this)
+NotificationUtil.with(this, R.mipmap.ic_launcher)
                         .title("title").message("message").ticker("ticker")
                         .smallIcon(android.R.drawable.sym_action_email)
                         .largeIcon(R.drawable.a1)
@@ -64,7 +64,7 @@ NotificationUtil.with(this)
 ```
 #### Add Custom layout
 ```
-NotificationUtil.with(this)
+NotificationUtil.with(this, R.mipmap.ic_launcher)
                         .title("title").message("message").ticker("ticker")
                         .smallIcon(android.R.drawable.sym_action_email)
                         .largeIcon(R.drawable.a1)
